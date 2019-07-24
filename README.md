@@ -1,0 +1,2 @@
+# ThinkStationLogTools
+ThinkStation日志收集脚本
