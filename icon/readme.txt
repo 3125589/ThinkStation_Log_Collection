@@ -1,0 +1,12 @@
+ThinkStation日志收集工具V0.3
+本工具用于ThinkStation产品的故障日志收集，本工具可以收以下信息：
+软件列表
+BIOS信息
+Systeminfo
+操作系统日志
+操作系统进程
+硬件信息
+阵列信息
+硬盘S.M.A.R.T信息
+显卡信息
+DriextX诊断信息

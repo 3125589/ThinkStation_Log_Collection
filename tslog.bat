@@ -3,8 +3,10 @@
 @CLS
 @ECHO.
 @ECHO ===============================
-@ECHO ThinkStation 日志收集工具 V0.2
+@ECHO ThinkStation 日志收集工具 V0.3
 @ECHO ===============================
+@ECHO 本工具所收集信息仅限故障诊断使用，并不涉及您的个人隐私，请放心使用！
+
 
 @:init
 @setlocal DisableDelayedExpansion
@@ -41,15 +43,11 @@
 @::::::::::::::::::::::::::::
 @::START
 @::::::::::::::::::::::::::::
-@REM Run shell as admin (example) - put here code as you like
-@REM ECHO %batchName% Arguments: %1 %2 %3 %4 %5 %6 %7 %8 %9
 @mkdir %cd%\tslog
 @set workpath=%cd%\tslog
 @echo 收集软件列表中，请耐心等待！
 @wmic product get name,version >%workpath%\SoftwareList.txt
 @echo 收集BIOS信息中，请耐心等待！
-rem @echo. %cd%\tools\AMIDEWINx64.exe>nul 2>nul /DUMPALL >>%workpath%\AMI_BIOS_DUMP.txt
-rem @echo. %cd%\tools\AMIDEWINx64.exe>nul 2>nul /DMS >>%workpath%\DMS.txt
 start %cd%\tools\amibios.vbs
 @echo 收集操作系统信息中，请耐心等待！
 @systeminfo >%workpath%\Systeminfo.txt
@@ -67,8 +65,10 @@ xcopy>nul 2>nul %SystemRoot%\Minidump\* %workpath%\osdump /E/C/H
 @echo 收集硬件信息中，请耐心等待！
 @%cd%\tools\Devcon.exe findall * >%workpath%\Devicesinfo.txt
 @echo 收集阵列信息中，请耐心等待！
-@%cd%\tools\IntelVROCCli.exe>nul 2>nul -V >%workpath%\Intel_RAID_Info.txt
-@%cd%\tools\IntelVROCCli.exe>nul 2>nul -I >>%workpath%\Intel_RAID_Info.txt
+@%cd%\tools\IntelVROCCli.exe>nul 2>nul -V >%workpath%\Intel_RAID_Info_VROC.txt
+@%cd%\tools\IntelVROCCli.exe>nul 2>nul -I >>%workpath%\Intel_RAID_Info_VROC.txt
+@%cd%\tools\rstcli64.exe>nul 2>nul -V >%workpath%\Intel_RAID_Info_RSTe.txt
+@%cd%\tools\rstcli64.exe>nul 2>nul -I >>%workpath%\Intel_RAID_Info_RSTe.txt
 @%cd%\tools\storcli64.exe >nul 2>nul /call/eall/sall show all >%workpath%\BCM_RAID_Info.txt
 @%cd%\tools\storcli64.exe >nul 2>nul /call show events file=%workpath%\BCM_RAID_EVENT.txt
 @%cd%\tools\storcli64.exe >nul 2>nul /call show termlog >>%workpath%\BCM_termlog.txt
@@ -80,6 +80,8 @@ xcopy>nul 2>nul %SystemRoot%\Minidump\* %workpath%\osdump /E/C/H
 @%cd%\tools\nvidia-smi.exe -a  >>%workpath%\NVIDIA_INFO.txt
 @%cd%\tools\nvdebugdump.exe -D
 @copy>nul 2>nul %cd%\dump.zip %workpath%\NVIDIA_dump.zip
+@echo 收集DriextX诊断信息中，请耐心等待！
+@dxdiag /t %workpath%\dxdiag.txt
 @echo 日志打包中，请耐心等待！
 @set name=%date:~0,4%%date:~5,2%%date:~8,2%0%time:~1,1%%time:~3,2%%time:~6,2%
 %cd%\tools\7-Zip\7z.exe a %cd%\%name%.7z %workpath%\
