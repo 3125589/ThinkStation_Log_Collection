@@ -9,4 +9,4 @@ Systeminfo
 阵列信息
 硬盘S.M.A.R.T信息
 显卡信息
-DriextX诊断信息
+DirectX诊断信息
