@@ -49,6 +49,8 @@
 @wmic product get name,version >%workpath%\SoftwareList.txt
 @echo 收集BIOS信息中，请耐心等待！
 start %cd%\tools\amibios.vbs
+%cd%\tools\bios\CFGWIN_x64.exe /c /path:%workpath%\bios_settings.txt
+%cd%\tools\bios\SRWINx64.exe /b %workpath%\bios_settings_raw.txt
 @echo 收集操作系统信息中，请耐心等待！
 @systeminfo >%workpath%\Systeminfo.txt
 @echo 收集操作系统日志中，请耐心等待！
