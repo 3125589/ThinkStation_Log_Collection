@@ -2,9 +2,10 @@
 @echo off
 @CLS
 @ECHO.
-@ECHO ===============================
-@ECHO ThinkStation 日志收集工具 V0.3
-@ECHO ===============================
+@chcp 936 >nul
+@ECHO =========================
+@ECHO ThinkStation 日志收集工具
+@ECHO =========================
 @ECHO 本工具所收集信息仅限故障诊断使用，并不涉及您的个人隐私，请放心使用！
 
 
@@ -48,11 +49,15 @@
 @echo 收集软件列表中，请耐心等待！
 @wmic product get name,version >%workpath%\SoftwareList.txt
 @echo 收集BIOS信息中，请耐心等待！
-start %cd%\tools\amibios.vbs
-%cd%\tools\bios\CFGWIN_x64.exe /c /path:%workpath%\bios_settings.txt
-%cd%\tools\bios\SRWINx64.exe /b %workpath%\bios_settings_raw.txt
+%cd%\tools\AMIDEWINx64.exe>nul 2>nul /DUMPALL %cd%\tslog\AMI_BIOS_DUMP.txt
+%cd%\tools\AMIDEWINx64.exe>nul 2>nul /DMS %cd%\tslog\DMS.txt
+%cd%\tools\bios\CFGWIN_x64.exe>nul 2>nul /c /path:%workpath%\bios_settings.txt
+%cd%\tools\bios\SRWINx64.exe>nul 2>nul /b %workpath%\bios_settings_raw.txt
 @echo 收集操作系统信息中，请耐心等待！
 @systeminfo >%workpath%\Systeminfo.txt
+@echo 收集操作系统电源设置中，请耐心等待！
+@powercfg /L >%workpath%\powercfg.txt
+@powercfg /Q >>%workpath%\powercfg.txt
 @echo 收集操作系统日志中，请耐心等待！
 @mkdir %cd%\tslog\oslog
 xcopy>nul 2>nul %SystemRoot%\System32\winevt\Logs\* %workpath%\oslog /E/C/H
@@ -78,9 +83,9 @@ xcopy>nul 2>nul %SystemRoot%\Minidump\* %workpath%\osdump /E/C/H
 @%cd%\tools\smartctl.exe --scan >%cd%\tools\SMART.txt
 @for /f  "tokens=1-3" %%i in (%cd%\tools\SMART.txt) do %cd%\tools\smartctl.exe -a %%i >>%workpath%\SMARTINFO.txt
 @echo 收集NVIDIA显卡信息中，请耐心等待！
-@%cd%\tools\nvidia-smi.exe  >%workpath%\NVIDIA_INFO.txt
-@%cd%\tools\nvidia-smi.exe -a  >>%workpath%\NVIDIA_INFO.txt
-@%cd%\tools\nvdebugdump.exe -D
+@%cd%\tools\nvidia-smi.exe>nul 2>nul  >%workpath%\NVIDIA_INFO.txt
+@%cd%\tools\nvidia-smi.exe>nul 2>nul -a  >>%workpath%\NVIDIA_INFO.txt
+@%cd%\tools\nvdebugdump.exe>nul 2>nul -D
 @copy>nul 2>nul %cd%\dump.zip %workpath%\NVIDIA_dump.zip
 @echo 收集DriextX诊断信息中，请耐心等待！
 @dxdiag /t %workpath%\dxdiag.txt
