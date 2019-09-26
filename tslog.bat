@@ -3,9 +3,9 @@
 @CLS
 @ECHO.
 @chcp 936 >nul
-@ECHO =========================
-@ECHO ThinkStation 日志收集工具
-@ECHO =========================
+@ECHO ================================
+@ECHO ThinkStation 日志收集工具（通用版）
+@ECHO ================================
 @ECHO 本工具所收集信息仅限故障诊断使用，并不涉及您的个人隐私，请放心使用！
 
 
@@ -48,11 +48,6 @@
 @set workpath=%cd%\tslog
 @echo 收集软件列表中，请耐心等待！
 @wmic product get name,version >%workpath%\SoftwareList.txt
-@echo 收集BIOS信息中，请耐心等待！
-%cd%\tools\AMIDEWINx64.exe>nul 2>nul /DUMPALL %cd%\tslog\AMI_BIOS_DUMP.txt
-%cd%\tools\AMIDEWINx64.exe>nul 2>nul /DMS %cd%\tslog\DMS.txt
-%cd%\tools\bios\CFGWIN_x64.exe>nul 2>nul /c /path:%workpath%\bios_settings.txt
-%cd%\tools\bios\SRWINx64.exe>nul 2>nul /b %workpath%\bios_settings_raw.txt
 @echo 收集操作系统信息中，请耐心等待！
 @systeminfo >%workpath%\Systeminfo.txt
 @echo 收集操作系统电源设置中，请耐心等待！

@@ -1,11 +1,9 @@
 # ThinkStationLogTools
-ThinkStation日志收集工具
+ThinkStation日志收集工具通用版
 
 本工具用于ThinkStation产品的故障日志收集，可收集：
 
 软件列表
-
-BIOS信息
 
 Systeminfo
 
