@@ -1,0 +1,4 @@
+/dev/sda -d ata # /dev/sda, ATA device
+/dev/sdb -d ata # /dev/sdb, ATA device
+/dev/sdc -d ata # /dev/sdc, ATA device
+/dev/sdd -d ata # /dev/sdd, ATA device

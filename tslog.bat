@@ -44,9 +44,9 @@
 @::::::::::::::::::::::::::::
 @::START
 @::::::::::::::::::::::::::::
-@mkdir %cd%\tslog
-@set workpath=%cd%\tslog
-@set toolpath=%cd%\tools
+@mkdir "%cd%"\tslog
+@set workpath="%cd%"\tslog
+@set toolpath="%cd%"\tools
 @echo 收集软件列表中，请耐心等待！
 @wmic product get name,version >%workpath%\SoftwareList.txt
 @echo 收集BIOS信息中，请耐心等待！
@@ -70,7 +70,6 @@ xcopy>nul 2>nul %SystemRoot%\System32\winevt\Logs\* %workpath%\oslog /E/C/H
 @mkdir %cd%\tslog\osdump
 copy>nul 2>nul %SystemRoot%\MEMORY.DMP %workpath%\osdump
 xcopy>nul 2>nul %SystemRoot%\Minidump\* %workpath%\osdump /E/C/H
-copy>nul 2>nul C:\MEMORY.DMP %workpath%\osdump
 @echo 收集操作系统进程中，请耐心等待！
 @tasklist /V >%workpath%\Tasklist.txt
 @echo 收集磁盘分区信息中，请耐心等待！
