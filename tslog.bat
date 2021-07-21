@@ -46,6 +46,7 @@
 @::::::::::::::::::::::::::::
 @mkdir %cd%\tslog
 @set workpath=%cd%\tslog
+@set toolpath=%cd%\tools
 @echo 收集软件列表中，请耐心等待！
 @wmic product get name,version >%workpath%\SoftwareList.txt
 @echo 收集BIOS信息中，请耐心等待！
@@ -53,6 +54,10 @@
 %cd%\tools\AMIDEWINx64.exe>nul 2>nul /DMS %cd%\tslog\DMS.txt
 %cd%\tools\bios\CFGWIN_x64.exe>nul 2>nul /c /path:%workpath%\bios_settings.txt
 %cd%\tools\bios\SRWINx64.exe>nul 2>nul /b %workpath%\bios_settings_raw.txt
+@echo 导出SIO日志中，请耐心等待！
+@cd %toolpath%
+@.\HwDiagWin.exe>nul 2>nul /dumplog  >>%workpath%\SIO_Events.log
+@cd ..
 @echo 收集操作系统信息中，请耐心等待！
 @systeminfo >%workpath%\Systeminfo.txt
 @echo 收集操作系统电源设置中，请耐心等待！
@@ -65,6 +70,7 @@ xcopy>nul 2>nul %SystemRoot%\System32\winevt\Logs\* %workpath%\oslog /E/C/H
 @mkdir %cd%\tslog\osdump
 copy>nul 2>nul %SystemRoot%\MEMORY.DMP %workpath%\osdump
 xcopy>nul 2>nul %SystemRoot%\Minidump\* %workpath%\osdump /E/C/H
+copy>nul 2>nul C:\MEMORY.DMP %workpath%\osdump
 @echo 收集操作系统进程中，请耐心等待！
 @tasklist /V >%workpath%\Tasklist.txt
 @echo 收集磁盘分区信息中，请耐心等待！
