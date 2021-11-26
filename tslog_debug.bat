@@ -56,7 +56,7 @@
 %cd%\tools\bios\SRWINx64.exe>nul 2>nul /b %workpath%\bios_settings_raw.txt
 @echo 导出SIO日志中，请耐心等待！
 @cd %toolpath%
-@.\HwDiagWin.exe>nul 2>nul /dumplog  >>%workpath%\SIO_Events.log
+@.\HwDiagWin.exe /dumplog  >>%workpath%\SIO_Events.log
 @cd ..
 @echo 收集操作系统信息中，请耐心等待！
 @systeminfo >%workpath%\Systeminfo.txt
@@ -65,11 +65,11 @@
 @powercfg /Q >>%workpath%\powercfg.txt
 @echo 收集操作系统日志中，请耐心等待！
 @mkdir %cd%\tslog\oslog
-xcopy>nul 2>nul %SystemRoot%\System32\winevt\Logs\* %workpath%\oslog /E/C
+xcopy %SystemRoot%\System32\winevt\Logs\* %workpath%\oslog /E/C
 @echo 收集操作系统DUMP文件中，请耐心等待！
 @mkdir %cd%\tslog\osdump
-copy>nul 2>nul %SystemRoot%\MEMORY.DMP %workpath%\osdump
-xcopy>nul 2>nul %SystemRoot%\Minidump\* %workpath%\osdump /E/C
+copy %SystemRoot%\MEMORY.DMP %workpath%\osdump
+xcopy %SystemRoot%\Minidump\* %workpath%\osdump /E/C
 @echo 收集操作系统进程中，请耐心等待！
 @tasklist /V >%workpath%\Tasklist.txt
 @echo 收集磁盘分区信息中，请耐心等待！
@@ -77,21 +77,21 @@ xcopy>nul 2>nul %SystemRoot%\Minidump\* %workpath%\osdump /E/C
 @echo 收集硬件信息中，请耐心等待！
 @%cd%\tools\Devcon.exe findall * >%workpath%\Devicesinfo.txt
 @echo 收集阵列信息中，请耐心等待！
-@%cd%\tools\IntelVROCCli.exe>nul 2>nul -V >%workpath%\Intel_RAID_Info_VROC.txt
-@%cd%\tools\IntelVROCCli.exe>nul 2>nul -I >>%workpath%\Intel_RAID_Info_VROC.txt
-@%cd%\tools\rstcli64.exe>nul 2>nul -V >%workpath%\Intel_RAID_Info_RSTe.txt
-@%cd%\tools\rstcli64.exe>nul 2>nul -I >>%workpath%\Intel_RAID_Info_RSTe.txt
-@%cd%\tools\storcli64.exe >nul 2>nul /call/eall/sall show all >%workpath%\BCM_RAID_Info.txt
-@%cd%\tools\storcli64.exe >nul 2>nul /call show events file=%workpath%\BCM_RAID_EVENT.txt
-@%cd%\tools\storcli64.exe >nul 2>nul /call show termlog >>%workpath%\BCM_termlog.txt
+@%cd%\tools\IntelVROCCli.exe -V >%workpath%\Intel_RAID_Info_VROC.txt
+@%cd%\tools\IntelVROCCli.exe -I >>%workpath%\Intel_RAID_Info_VROC.txt
+@%cd%\tools\rstcli64.exe -V >%workpath%\Intel_RAID_Info_RSTe.txt
+@%cd%\tools\rstcli64.exe -I >>%workpath%\Intel_RAID_Info_RSTe.txt
+@%cd%\tools\storcli64.exe /call/eall/sall show all >%workpath%\BCM_RAID_Info.txt
+@%cd%\tools\storcli64.exe /call show events file=%workpath%\BCM_RAID_EVENT.txt
+@%cd%\tools\storcli64.exe  /call show termlog >>%workpath%\BCM_termlog.txt
 @echo 收集硬盘S.M.A.R.T信息中，请耐心等待！
 @%cd%\tools\smartctl.exe --scan >%cd%\tools\SMART.txt
 @for /f  "tokens=1-3" %%i in (%cd%\tools\SMART.txt) do %cd%\tools\smartctl.exe -a %%i >>%workpath%\SMARTINFO.txt
 @echo 收集NVIDIA显卡信息中，请耐心等待！
-@%cd%\tools\nvidia-smi.exe>nul 2>nul  >%workpath%\NVIDIA_INFO.txt
-@%cd%\tools\nvidia-smi.exe>nul 2>nul -a  >>%workpath%\NVIDIA_INFO.txt
-@%cd%\tools\nvdebugdump.exe>nul 2>nul -D
-@copy>nul 2>nul %cd%\dump.zip %workpath%\NVIDIA_dump.zip
+@%cd%\tools\nvidia-smi.exe  >%workpath%\NVIDIA_INFO.txt
+@%cd%\tools\nvidia-smi.exe -a  >>%workpath%\NVIDIA_INFO.txt
+@%cd%\tools\nvdebugdump.exe -D
+@copy %cd%\dump.zip %workpath%\NVIDIA_dump.zip
 @echo 收集DriextX诊断信息中，请耐心等待！
 @dxdiag /t %workpath%\dxdiag.txt
 @echo 日志打包中，请耐心等待！
