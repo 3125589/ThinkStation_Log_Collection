@@ -54,7 +54,7 @@
 %cd%\tools\AMIDEWINx64.exe>nul 2>nul /DMS %cd%\tslog\DMS.txt
 %cd%\tools\bios\CFGWIN_x64.exe>nul 2>nul /c /path:%workpath%\bios_settings.txt
 %cd%\tools\bios\SRWINx64.exe>nul 2>nul /b %workpath%\bios_settings_raw.txt
-@echo 导出SIO日志中，请耐心等待！
+%cd%\tools\AFUWINx64.exe>nul 2>nul %workpath%\bios.rom /o
 @cd %toolpath%
 @.\HwDiagWin.exe>nul 2>nul /dumplog  >>%workpath%\SIO_Events.log
 @cd ..
@@ -102,4 +102,5 @@ xcopy>nul 2>nul %SystemRoot%\Minidump\* %workpath%\osdump /E/C
 @rd /S/Q "%workpath%"
 @rd /S/Q "%cd%\tools"
 @del %cd%\dump.zip
+@del %cd%\storcli.log
 @del %0
